@@ -27,6 +27,7 @@ namespace TestProject1
         [Test]
         public void EndToEndFlow() {
             String[] expectedproducts = {"iphone X","Nokia Edge"};
+            String[] actualproducts = new string[2];
             driver.FindElement(By.Id("username")).SendKeys("rahulshettyacademy");
             driver.FindElement(By.XPath("//input[@type='password']")).SendKeys("learning");
             driver.FindElement(By.XPath("//div[@class='form-group']//child::label[@for='terms']//child::span//child::input")).Click();
@@ -42,6 +43,13 @@ namespace TestProject1
             }
             Thread.Sleep(3000);
             driver.FindElement(By.PartialLinkText("Checkout")).Click();
+            IList<IWebElement> checkoutelem=driver.FindElements(By.CssSelector("h4 a"));
+            for(int i=0;i<checkoutelem.Count;i++)
+            {
+                actualproducts[i] = checkoutelem[i].Text;
+            }
+            Assert.AreEqual(expectedproducts, actualproducts);
+
         }
     }
 }
