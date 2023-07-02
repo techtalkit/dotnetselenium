@@ -49,6 +49,15 @@ namespace TestProject1
                 actualproducts[i] = checkoutelem[i].Text;
             }
             Assert.AreEqual(expectedproducts, actualproducts);
+            driver.FindElement(By.CssSelector(".btn-success")).Click();
+            //After Checkout page
+            driver.FindElement(By.Id("country")).SendKeys("Ind");
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.LinkText("India"))).Click();
+            driver.FindElement(By.CssSelector("label[for*='checkbox2']")).Click();
+            driver.FindElement(By.XPath("//input[@value='Purchase']")).Click();
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.CssSelector(".alert-success")));
+            String confirmText=driver.FindElement(By.CssSelector(".alert-success")).Text;
+            StringAssert.Contains("Success", confirmText);
 
         }
     }
